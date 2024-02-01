@@ -1,0 +1,18 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+transformers = "*"
+pyaudio = "*"
+torch = "*"
+torchaudio = "*"
+speechrecognition = "*"
+py3-tts = "*"
+langchain = "*"
+
+[dev-packages]
+
+[requires]
+python_version = "3.11"
