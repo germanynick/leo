@@ -11,6 +11,8 @@ torchaudio = "*"
 speechrecognition = "*"
 py3-tts = "*"
 langchain = "*"
+pyautogui = "*"
+pyobjc = "*"
 
 [dev-packages]
 
