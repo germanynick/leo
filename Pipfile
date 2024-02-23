@@ -9,10 +9,12 @@ pyaudio = "*"
 torch = "*"
 torchaudio = "*"
 speechrecognition = "*"
-py3-tts = "*"
 langchain = "*"
 pyautogui = "*"
-pyobjc = "*"
+pillow = "*"
+pyttsx3 = "*"
+pyobjc = "9.0.1"
+google-speech = "*"
 
 [dev-packages]
 

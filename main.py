@@ -3,19 +3,18 @@ import logging
 
 from utils import threaded
 from sensors import AudioSensor, ScreenSensor, CursorSensor
+from processors import AudioProcessor
 
 
 logging.basicConfig(
     format='%(asctime)s,%(msecs)03d %(levelname)-8s %(name)-8s [%(threadName)-8s] [%(filename)s:%(lineno)d] %(message)s',
     datefmt='%Y-%m-%d:%H:%M:%S',
-    level=logging.INFO
+    level=logging.DEBUG
 )
+    
 
-@threaded
-def main():
-    AudioSensor.start()
-    ScreenSensor.start()
-    CursorSensor.start()
+if __name__ == "__main__":    
+    AudioProcessor.start()
 
-if __name__ == "__main__":
-    main()
+    while True:
+        pass

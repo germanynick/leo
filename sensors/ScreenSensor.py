@@ -18,6 +18,7 @@ class ScreenSensor(Singleton):
 
     
     @staticmethod
+    @threaded
     def start(memory_size=3):
         instance = ScreenSensor()
         instance.config(memory_size=memory_size)
@@ -28,7 +29,6 @@ class ScreenSensor(Singleton):
         if not self._memories:
             self._memories = queue.Queue(maxsize=memory_size)
 
-    @threaded
     def __screen(self):
         if self._started:
             return

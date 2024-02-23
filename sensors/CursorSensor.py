@@ -1,5 +1,6 @@
 import queue
 import logging
+import pyautogui
 from utils import Singleton, threaded
 
 class CursorSensor(Singleton):
@@ -7,6 +8,7 @@ class CursorSensor(Singleton):
     _started: bool = False
 
     @staticmethod
+    @threaded
     def start(memory_size=10):
         instance = CursorSensor()
         instance.config(memory_size=memory_size)
@@ -17,7 +19,6 @@ class CursorSensor(Singleton):
         if not self._memories:
             self._memories = queue.Queue(maxsize=memory_size)
 
-    @threaded
     def __cursor(self):
         if self._started:
             return
@@ -28,14 +29,12 @@ class CursorSensor(Singleton):
         while True:
             try:
                 x, y = pyautogui.position()
-                logging.debug(f"Cursor position: {x}, {y}")
 
                 # Check last cursor position is different from the last one before save it
                 if not self._memories.empty():
                     last_x, last_y = self._memories.queue[-1]
                     if last_x == x and last_y == y:
                         continue
-                    
                 if self._memories.full():
                     self._memories.get()  # Remove the first item if the queue is full
 

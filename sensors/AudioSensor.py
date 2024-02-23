@@ -10,17 +10,27 @@ class AudioSensor(Singleton):
     _started: bool = False
 
     @staticmethod
+    @threaded
     def start(memory_size=1000):
         instance = AudioSensor()
         instance.config(memory_size=memory_size)
         instance.__audio()
         return instance
 
+    @staticmethod
+    def get():
+        instance = AudioSensor()
+        
+        if instance._memories.empty():
+            return ""
+
+        return instance._memories.get()
+
     def config(self, memory_size=1000):
         if not self._memories:
             self._memories = queue.Queue(maxsize=memory_size)
 
-    @threaded
+    
     def __audio(self):
         if self._started:
             return
@@ -34,7 +44,7 @@ class AudioSensor(Singleton):
 
             while True:
                 try:
-                    audio = recognizer.listen(source)
+                    audio = recognizer.listen(source, timeout=5)
                     text = recognizer.recognize_google(audio)
                     logging.info(f"You said: {text}")
 
@@ -44,7 +54,8 @@ class AudioSensor(Singleton):
                     self._memories.put(text)
 
                 except sr.UnknownValueError:
-                    logging.debug("Could not understand audio")
+                    # logging.debug("Could not understand audio")
+                    pass
                 except sr.RequestError as e:
                     logging.debug(f"Error with the API request; {e}")
                 except sr.WaitTimeoutError:

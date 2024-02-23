@@ -1,1 +1,1 @@
-from .process import process
+from .AudioProcessor import AudioProcessor
